@@ -10,7 +10,7 @@ public abstract partial class Policy : ISyncPolicy
     /// <param name="action">The action to perform.</param>
     [DebuggerStepThrough]
     public void Execute(Action action) =>
-        Execute((_, _) => action(), [], DefaultCancellationToken);
+        Execute((_, _) => action(), new(), DefaultCancellationToken);
 
     /// <summary>
     /// Executes the specified action within the policy.
@@ -37,7 +37,7 @@ public abstract partial class Policy : ISyncPolicy
     /// <param name="cancellationToken">The cancellation token.</param>
     [DebuggerStepThrough]
     public void Execute(Action<CancellationToken> action, CancellationToken cancellationToken) =>
-        Execute((_, ct) => action(ct), [], cancellationToken);
+        Execute((_, ct) => action(ct), new(), cancellationToken);
 
     /// <summary>
     /// Executes the specified action within the policy.
@@ -72,7 +72,7 @@ public abstract partial class Policy : ISyncPolicy
         }
         finally
         {
-            PolicyBase.RestorePolicyContext(context, priorPolicyWrapKey, priorPolicyKey);
+            RestorePolicyContext(context, priorPolicyWrapKey, priorPolicyKey);
         }
     }
 
@@ -86,7 +86,7 @@ public abstract partial class Policy : ISyncPolicy
     /// <returns>The value returned by the action.</returns>
     [DebuggerStepThrough]
     public TResult Execute<TResult>(Func<TResult> action) =>
-        Execute((_, _) => action(), [], DefaultCancellationToken);
+        Execute((_, _) => action(), new(), DefaultCancellationToken);
 
     /// <summary>
     /// Executes the specified action within the policy and returns the result.
@@ -121,7 +121,7 @@ public abstract partial class Policy : ISyncPolicy
     /// <returns>The value returned by the action.</returns>
     [DebuggerStepThrough]
     public TResult Execute<TResult>(Func<CancellationToken, TResult> action, CancellationToken cancellationToken) =>
-        Execute((_, ct) => action(ct), [], cancellationToken);
+        Execute((_, ct) => action(ct), new(), cancellationToken);
 
     /// <summary>
     /// Executes the specified action within the policy and returns the result.
@@ -160,7 +160,7 @@ public abstract partial class Policy : ISyncPolicy
         }
         finally
         {
-            PolicyBase.RestorePolicyContext(context, priorPolicyWrapKey, priorPolicyKey);
+            RestorePolicyContext(context, priorPolicyWrapKey, priorPolicyKey);
         }
     }
 
@@ -177,7 +177,7 @@ public abstract partial class Policy : ISyncPolicy
     /// <returns>The captured result.</returns>
     [DebuggerStepThrough]
     public PolicyResult ExecuteAndCapture(Action action) =>
-        ExecuteAndCapture((_, _) => action(), [], DefaultCancellationToken);
+        ExecuteAndCapture((_, _) => action(), new(), DefaultCancellationToken);
 
     /// <summary>
     /// Executes the specified action within the policy and returns the captured result.
@@ -208,7 +208,7 @@ public abstract partial class Policy : ISyncPolicy
     /// <returns>The captured result.</returns>
     [DebuggerStepThrough]
     public PolicyResult ExecuteAndCapture(Action<CancellationToken> action, CancellationToken cancellationToken) =>
-        ExecuteAndCapture((_, ct) => action(ct), [], cancellationToken);
+        ExecuteAndCapture((_, ct) => action(ct), new(), cancellationToken);
 
     /// <summary>
     /// Executes the specified action within the policy and returns the captured result.
@@ -258,7 +258,7 @@ public abstract partial class Policy : ISyncPolicy
     /// <returns>The captured result.</returns>
     [DebuggerStepThrough]
     public PolicyResult<TResult> ExecuteAndCapture<TResult>(Func<TResult> action) =>
-        ExecuteAndCapture((_, _) => action(), [], DefaultCancellationToken);
+        ExecuteAndCapture((_, _) => action(), new(), DefaultCancellationToken);
 
     /// <summary>
     /// Executes the specified action within the policy and returns the captured result.
@@ -292,7 +292,7 @@ public abstract partial class Policy : ISyncPolicy
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The captured result.</returns>
     public PolicyResult<TResult> ExecuteAndCapture<TResult>(Func<CancellationToken, TResult> action, CancellationToken cancellationToken) =>
-        ExecuteAndCapture((_, ct) => action(ct), [], cancellationToken);
+        ExecuteAndCapture((_, ct) => action(ct), new(), cancellationToken);
 
     /// <summary>
     /// Executes the specified action within the policy and returns the captured result.

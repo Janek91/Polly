@@ -4,8 +4,8 @@ internal sealed class GeneratorHelper<TResult>
 {
     private readonly Func<int, int> _weightGenerator;
 
-    private readonly List<int> _weights = [];
-    private readonly List<Func<ResilienceContext, Outcome<TResult>>> _factories = [];
+    private readonly List<int> _weights = new();
+    private readonly List<Func<ResilienceContext, Outcome<TResult>>> _factories = new();
     private int _totalWeight;
 
     public GeneratorHelper(Func<int, int> weightGenerator) => _weightGenerator = weightGenerator;

@@ -11,7 +11,7 @@ public abstract partial class AsyncPolicy<TResult> : IAsyncPolicy<TResult>
     /// <returns>The value returned by the action.</returns>
     [DebuggerStepThrough]
     public Task<TResult> ExecuteAsync(Func<Task<TResult>> action) =>
-        ExecuteAsync((_, _) => action(), [], CancellationToken.None, DefaultContinueOnCapturedContext);
+        ExecuteAsync((_, _) => action(), new(), CancellationToken.None, DefaultContinueOnCapturedContext);
 
     /// <summary>
     ///     Executes the specified asynchronous action within the policy and returns the result.
@@ -41,7 +41,7 @@ public abstract partial class AsyncPolicy<TResult> : IAsyncPolicy<TResult>
     /// <returns>The value returned by the action.</returns>
     [DebuggerStepThrough]
     public Task<TResult> ExecuteAsync(Func<CancellationToken, Task<TResult>> action, CancellationToken cancellationToken) =>
-        ExecuteAsync((_, ct) => action(ct), [], cancellationToken, DefaultContinueOnCapturedContext);
+        ExecuteAsync((_, ct) => action(ct), new(), cancellationToken, DefaultContinueOnCapturedContext);
 
     /// <summary>
     ///     Executes the specified asynchronous action within the policy and returns the result.
@@ -53,7 +53,7 @@ public abstract partial class AsyncPolicy<TResult> : IAsyncPolicy<TResult>
     /// <exception cref="InvalidOperationException">Please use asynchronous-defined policies when calling asynchronous ExecuteAsync (and similar) methods.</exception>
     [DebuggerStepThrough]
     public Task<TResult> ExecuteAsync(Func<CancellationToken, Task<TResult>> action, CancellationToken cancellationToken, bool continueOnCapturedContext) =>
-        ExecuteAsync((_, ct) => action(ct), [], cancellationToken, continueOnCapturedContext);
+        ExecuteAsync((_, ct) => action(ct), new(), cancellationToken, continueOnCapturedContext);
 
     /// <summary>
     ///     Executes the specified asynchronous action within the policy and returns the result.
@@ -115,7 +115,7 @@ public abstract partial class AsyncPolicy<TResult> : IAsyncPolicy<TResult>
         }
         finally
         {
-            PolicyBase.RestorePolicyContext(context, priorPolicyWrapKey, priorPolicyKey);
+            RestorePolicyContext(context, priorPolicyWrapKey, priorPolicyKey);
         }
     }
 
@@ -130,7 +130,7 @@ public abstract partial class AsyncPolicy<TResult> : IAsyncPolicy<TResult>
     /// <returns>The captured result.</returns>
     [DebuggerStepThrough]
     public Task<PolicyResult<TResult>> ExecuteAndCaptureAsync(Func<Task<TResult>> action) =>
-        ExecuteAndCaptureAsync((_, _) => action(), [], CancellationToken.None, DefaultContinueOnCapturedContext);
+        ExecuteAndCaptureAsync((_, _) => action(), new(), CancellationToken.None, DefaultContinueOnCapturedContext);
 
     /// <summary>
     /// Executes the specified asynchronous action within the policy and returns the result.
@@ -161,7 +161,7 @@ public abstract partial class AsyncPolicy<TResult> : IAsyncPolicy<TResult>
     /// <returns>The captured result.</returns>
     [DebuggerStepThrough]
     public Task<PolicyResult<TResult>> ExecuteAndCaptureAsync(Func<CancellationToken, Task<TResult>> action, CancellationToken cancellationToken) =>
-        ExecuteAndCaptureAsync((_, ct) => action(ct), [], cancellationToken, DefaultContinueOnCapturedContext);
+        ExecuteAndCaptureAsync((_, ct) => action(ct), new(), cancellationToken, DefaultContinueOnCapturedContext);
 
     /// <summary>
     ///     Executes the specified asynchronous action within the policy and returns the result.
@@ -173,7 +173,7 @@ public abstract partial class AsyncPolicy<TResult> : IAsyncPolicy<TResult>
     /// <exception cref="InvalidOperationException">Please use asynchronous-defined policies when calling asynchronous ExecuteAsync (and similar) methods.</exception>
     [DebuggerStepThrough]
     public Task<PolicyResult<TResult>> ExecuteAndCaptureAsync(Func<CancellationToken, Task<TResult>> action, CancellationToken cancellationToken, bool continueOnCapturedContext) =>
-        ExecuteAndCaptureAsync((_, ct) => action(ct), [], cancellationToken, continueOnCapturedContext);
+        ExecuteAndCaptureAsync((_, ct) => action(ct), new(), cancellationToken, continueOnCapturedContext);
 
     /// <summary>
     ///     Executes the specified asynchronous action within the policy and returns the result.

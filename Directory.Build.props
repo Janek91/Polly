@@ -1,6 +1,7 @@
 <Project>
   <PropertyGroup>
     <UseArtifactsOutput>true</UseArtifactsOutput>
+    <SKIP_POLLY_ANALYZERS>true</SKIP_POLLY_ANALYZERS>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(CI)' == 'true' ">
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>

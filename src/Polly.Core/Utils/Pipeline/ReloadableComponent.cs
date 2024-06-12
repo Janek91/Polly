@@ -50,7 +50,7 @@ internal sealed class ReloadableComponent : PipelineComponent
         }
 
 #pragma warning disable S3878 // Arrays should not be created for params parameters
-        _tokenSource = CancellationTokenSource.CreateLinkedTokenSource([.. _reloadTokens]);
+        _tokenSource = CancellationTokenSource.CreateLinkedTokenSource(_reloadTokens.ToArray());
 #pragma warning restore S3878 // Arrays should not be created for params parameters
         _registration = _tokenSource.Token.Register(() =>
         {
@@ -64,7 +64,7 @@ internal sealed class ReloadableComponent : PipelineComponent
             }
             catch (Exception e)
             {
-                _reloadTokens = [];
+                _reloadTokens = new();
                 _telemetry.Report(new(ResilienceEventSeverity.Error, ReloadFailedEvent), context, Outcome.FromException(e), new ReloadFailedArguments(e));
                 ResilienceContextPool.Shared.Return(context);
             }
